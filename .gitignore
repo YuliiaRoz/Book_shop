@@ -1,0 +1,9 @@
+venv/
+env/
+
+.idea/
+
+__pycharme__
+*.pyc
+
+.env
