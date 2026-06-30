@@ -1,0 +1,19 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    <h1>{{ book.title }}</h1>
+    
+    <div style="border: 1px solid #ccc; padding: 15px;">
+        <p><strong>Ціна:</strong> {{ book.price }} грн</p>
+        <p><strong>Рік видання:</strong> {{ book.publisher_year }}</p>
+        
+        {% if user.is_staff %}
+            <hr>
+            <a href="{% url 'book_update' book.pk %}">Редагувати</a> | 
+            <a href="{% url 'book_delete' book.pk %}" style="color: red;">Видалити</a>
+        {% endif %}
+    </div>
+    
+    <br>
+    <a href="{% url 'book_list' %}">&larr; Повернутися до каталогу</a>
+{% endblock %}

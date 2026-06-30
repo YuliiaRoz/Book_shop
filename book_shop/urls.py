@@ -16,8 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from shop.views import main_page
+from shop.views import BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView, custom_404_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_page),
+    #path('', main_page),
+    path('', BookListView.as_view(), name='book_list'),
+    path('books/<int:pk>', BookDetailView.as_view(), name='book_detail'),
+    path('books/add', BookCreateView.as_view(), name='book_create'),
+    path('books/<int:pk>/edit/', BookUpdateView.as_view(), name='book_update'),
+    path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book_delete'),
+
 ]
+
+handler404 = custom_404_view

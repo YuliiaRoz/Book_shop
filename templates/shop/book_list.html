@@ -1,0 +1,81 @@
+{% extends 'shop/base.html' %} {% block content %}
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <form method="get" action="{% url 'book_list' %}" class="d-flex">
+                <input class="form-control me-2 form-control-lg" type="search" name="query"
+                       placeholder="Шукати за назвою або автором..."
+                       value="{{ request.GET.query }}">
+                <button class="btn btn-primary btn-lg" type="submit">Шукати</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mb-5">
+        <h5 class="text-muted mb-3">Фільтр за категоріями:</h5>
+        <a href="{% url 'book_list' %}" class="btn btn-outline-secondary btn-sm me-2 mb-2 {% if not request.GET.category %}active{% endif %}">
+            Всі книги
+        </a>
+
+        {% for cat in categories %}
+            <a href="?category={{ cat.slug }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}"
+               class="btn btn-outline-dark btn-sm me-2 mb-2 {% if request.GET.category == cat.slug %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <h3 class="mb-4 text-secondary text-center">Каталог книг</h3>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for book in books %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'book_detail' book.pk %}" class="text-decoration-none text-dark fw-bold">
+                                {{ book.title }}
+                            </a>
+                        </h5>
+                        <h6 class="card-subtitle mb-3 text-success fs-5">{{ book.price }} грн</h6>
+                        <p class="card-text text-muted mb-0">Залишок: {{ book.amount }} шт.</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center" role="alert">
+                    Книг не знайдено.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+        <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Назад</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Назад</span></li>
+                {% endif %}
+
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Вперед</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Вперед</span></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}
