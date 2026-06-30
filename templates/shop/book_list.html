@@ -1,7 +1,7 @@
 {% extends 'shop/base.html' %} {% block content %}
     <div class="row justify-content-center mb-4">
         <div class="col-md-8">
-            <form method="get" action="{% url 'book_list' %}" class="d-flex">
+            <form method="get" action="{% url 'shop:book_list' %}" class="d-flex">
                 <input class="form-control me-2 form-control-lg" type="search" name="query"
                        placeholder="Шукати за назвою або автором..."
                        value="{{ request.GET.query }}">
@@ -12,7 +12,7 @@
 
     <div class="text-center mb-5">
         <h5 class="text-muted mb-3">Фільтр за категоріями:</h5>
-        <a href="{% url 'book_list' %}" class="btn btn-outline-secondary btn-sm me-2 mb-2 {% if not request.GET.category %}active{% endif %}">
+        <a href="{% url 'shop:book_list' %}" class="btn btn-outline-secondary btn-sm me-2 mb-2 {% if not request.GET.category %}active{% endif %}">
             Всі книги
         </a>
 
@@ -32,7 +32,7 @@
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a href="{% url 'book_detail' book.pk %}" class="text-decoration-none text-dark fw-bold">
+                            <a href="{% url 'shop:book_detail' book.pk %}" class="text-decoration-none text-dark fw-bold">
                                 {{ book.title }}
                             </a>
                         </h5>

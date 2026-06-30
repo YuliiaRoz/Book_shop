@@ -1,5 +1,3 @@
-from unicodedata import category
-
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -53,12 +51,13 @@ class BookListView(ListView):
             clean_query = query.strip()
 
             queryset = queryset.filter(
-                Q(title__icontains=clean_query) | Q(author__name__icontains=query.strip)
+                Q(title__icontains=clean_query) |
+                Q(author__name__icontains=clean_query)
             ).distinct()
 
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
-
+        #print("запит:", queryset.query)
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -77,7 +76,7 @@ class BookCreateView(UserPassesTestMixin, CreateView):
     model = Book
     template_name = 'shop/book_form.html'
     fields = ['title', 'author', 'category', 'price', 'publisher_year', 'amount', 'available', 'publisher']
-    success_url = reverse_lazy('book_list')
+    success_url = reverse_lazy('shop:book_list')
 
     def test_func(self):
         return self.request.user.is_authenticated
@@ -87,7 +86,7 @@ class BookUpdateView(UserPassesTestMixin, UpdateView):
     model = Book
     template_name = ('shop/book_form.html')
     fields = ['title', 'author', 'category', 'price', 'publisher_year', 'amount', 'available', 'publisher']
-    success_url = reverse_lazy('book_list')
+    success_url = reverse_lazy('shop:book_list')
 
     def test_func(self):
         return self.request.user.is_authenticated
@@ -96,7 +95,7 @@ class BookUpdateView(UserPassesTestMixin, UpdateView):
 class BookDeleteView(UserPassesTestMixin, DeleteView):
     model = Book
     template_name = 'shop/book_confirm_delete.html'
-    success_url = reverse_lazy('book_list')
+    success_url = reverse_lazy('shop:book_list')
 
     def test_func(self):
         return self.request.user.is_authenticated

@@ -9,11 +9,11 @@
         
         {% if user.is_staff %}
             <hr>
-            <a href="{% url 'book_update' book.pk %}">Редагувати</a> | 
-            <a href="{% url 'book_delete' book.pk %}" style="color: red;">Видалити</a>
+            <a href="{% url 'shop:book_update' book.pk %}">Редагувати</a> |
+            <a href="{% url 'shop:book_delete' book.pk %}" style="color: red;">Видалити</a>
         {% endif %}
     </div>
     
     <br>
-    <a href="{% url 'book_list' %}">&larr; Повернутися до каталогу</a>
+    <a href="{% url 'shop:book_list' %}">&larr; Повернутися до каталогу</a>
 {% endblock %}
