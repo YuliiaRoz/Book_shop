@@ -1,8 +1,5 @@
 from django.contrib import admin
 from shop.models import Category, Book, Author, Rating, Publisher
-# Register your models here.
-import shop.models
-
 
 class BookInline(admin.StackedInline):
     model = Book
@@ -13,7 +10,6 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name',)
-
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):

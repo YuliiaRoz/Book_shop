@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from shop.views import BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView, custom_404_view
-
+from django.conf import settings
 handler404 = custom_404_view
 
 app_name = 'shop'
@@ -26,5 +26,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('shop.urls')),
+    path('users/', include('user_management.urls')),
+
+    path('accounts/', include('allauth.urls')),
 ]
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

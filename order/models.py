@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class OrderDetail(models.Model):
@@ -23,7 +24,7 @@ class PaymentStatus(models.Model):
     FAILED = 'failed'
 
 class Order(models.Model):
-    owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     delivery_address = models.ForeignKey('user_management.DeliveryAddress', on_delete=models.CASCADE)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=20)

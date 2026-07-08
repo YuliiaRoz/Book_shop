@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from shop.models import Book, Category
 from django.db.models import Q, Count
 from django.shortcuts import render
@@ -77,6 +77,7 @@ class BookCreateView(UserPassesTestMixin, CreateView):
     template_name = 'shop/book_form.html'
     fields = ['title', 'author', 'category', 'price', 'publisher_year', 'amount', 'available', 'publisher']
     success_url = reverse_lazy('shop:book_list')
+    permission_required = 'shop.add_book'
 
     def test_func(self):
         return self.request.user.is_authenticated
@@ -87,6 +88,7 @@ class BookUpdateView(UserPassesTestMixin, UpdateView):
     template_name = ('shop/book_form.html')
     fields = ['title', 'author', 'category', 'price', 'publisher_year', 'amount', 'available', 'publisher']
     success_url = reverse_lazy('shop:book_list')
+    permission_required = 'shop.change_book'
 
     def test_func(self):
         return self.request.user.is_authenticated
@@ -96,6 +98,7 @@ class BookDeleteView(UserPassesTestMixin, DeleteView):
     model = Book
     template_name = 'shop/book_confirm_delete.html'
     success_url = reverse_lazy('shop:book_list')
+    permission_required = 'shop.delete_book'
 
     def test_func(self):
         return self.request.user.is_authenticated
