@@ -1,0 +1,225 @@
+INFO | 2026-07-05 18:39:43,231 | views | User Dmytro registered successfully!
+WARNING | 2026-07-05 19:41:55,485 | log | Not Found: /favicon.ico
+WARNING | 2026-07-05 19:41:55,486 | log | "GET /favicon.ico HTTP/1.1" 404 20432
+ERROR | 2026-07-05 19:42:07,371 | log | Internal Server Error: /users/login/
+Traceback (most recent call last):
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: django_site
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/views/decorators/debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/utils/decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/utils/decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/contrib/auth/views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/views/generic/edit.py", line 142, in get
+    return self.render_to_response(self.get_context_data())
+                                   ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/contrib/auth/views.py", line 113, in get_context_data
+    current_site = get_current_site(self.request)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/contrib/sites/shortcuts.py", line 16, in get_current_site
+    return Site.objects.get_current(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/contrib/sites/models.py", line 59, in get_current
+    return self._get_site_by_id(site_id)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/contrib/sites/models.py", line 30, in _get_site_by_id
+    site = self.get(pk=site_id)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/models/query.py", line 635, in get
+    num = len(clone)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/models/query.py", line 372, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/models/query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/models/query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/debug_toolbar/panels/sql/tracking.py", line 281, in execute
+    return self._record(super().execute, sql, params)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/debug_toolbar/panels/sql/tracking.py", line 201, in _record
+    return method(sql, params)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/rozhchenko/PycharmProjects/Book_shop/.venv/lib/python3.14/site-packages/django/db/backends/sqlite3/base.py", line 359, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: django_site
+ERROR | 2026-07-05 19:42:07,446 | log | "GET /users/login/ HTTP/1.1" 500 217685
+WARNING | 2026-07-08 17:17:00,698 | log | Not Found: /favicon.ico
+WARNING | 2026-07-08 17:17:00,699 | log | "GET /favicon.ico HTTP/1.1" 404 20432
+WARNING | 2026-07-09 18:34:22,966 | log | Not Found: /favicon.ico
+WARNING | 2026-07-09 18:34:22,967 | log | "GET /favicon.ico HTTP/1.1" 404 5807
+WARNING | 2026-07-15 19:01:04,545 | log | Not Found: /favicon.ico
+WARNING | 2026-07-15 19:01:04,545 | log | "GET /favicon.ico HTTP/1.1" 404 5807
+ERROR | 2026-07-16 18:51:55,410 | log | Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/http/request.py", line 206, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+WARNING | 2026-07-16 18:51:55,424 | log | "GET / HTTP/1.1" 400 63625
+ERROR | 2026-07-16 18:51:55,725 | log | Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/http/request.py", line 206, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+WARNING | 2026-07-16 18:51:55,727 | log | "GET /favicon.ico HTTP/1.1" 400 63575
+ERROR | 2026-07-16 18:54:36,505 | log | Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "shop_book" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "shop_book" WHERE ("shop_b...
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/views/generic/list.py", line 178, in get
+    context = self.get_context_data()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/shop/views.py", line 64, in get_context_data
+    context = super(BookListView, self).get_context_data(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/views/generic/list.py", line 128, in get_context_data
+    paginator, page, queryset, is_paginated = self.paginate_queryset(
+                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/views/generic/list.py", line 73, in paginate_queryset
+    page = paginator.page(page_number)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/core/paginator.py", line 177, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/core/paginator.py", line 160, in validate_number
+    return self._validate_number(number, self.num_pages)
+                                         ^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/core/paginator.py", line 195, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/core/paginator.py", line 189, in count
+    return c()
+           ^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/query.py", line 610, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 656, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 638, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.12/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.12/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "shop_book" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "shop_book" WHERE ("shop_b...
+                                          ^
+
+ERROR | 2026-07-16 18:54:36,513 | log | "GET / HTTP/1.1" 500 164755
+WARNING | 2026-07-16 18:54:36,681 | log | Not Found: /favicon.ico
+WARNING | 2026-07-16 18:54:36,683 | log | "GET /favicon.ico HTTP/1.1" 404 5805

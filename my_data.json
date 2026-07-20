@@ -1,0 +1,402 @@
+[
+{
+  "model": "auth.group",
+  "pk": 1,
+  "fields": {
+    "name": "Manager",
+    "permissions": [
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      21,
+      22,
+      23,
+      24,
+      33,
+      34,
+      35,
+      36,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      45,
+      46,
+      47,
+      48
+    ]
+  }
+},
+{
+  "model": "shop.publisher",
+  "pk": 1,
+  "fields": {
+    "name": "Astrolabium",
+    "address": "Peremogy street",
+    "city": "Lviv",
+    "state_province": "79008",
+    "country": "Ukraine",
+    "website": "https://astrolabium.com.ua/"
+  }
+},
+{
+  "model": "shop.publisher",
+  "pk": 2,
+  "fields": {
+    "name": "Starylev",
+    "address": "Staroznesenska",
+    "city": "Lviv",
+    "state_province": "78003",
+    "country": "Ukraine",
+    "website": "https://starylev.com.ua/"
+  }
+},
+{
+  "model": "shop.publisher",
+  "pk": 3,
+  "fields": {
+    "name": "Ranok",
+    "address": "Nezalezhnosti",
+    "city": "Harkiv",
+    "state_province": "61022",
+    "country": "Ukraine",
+    "website": "https://www.ranok.com.ua/"
+  }
+},
+{
+  "model": "shop.author",
+  "pk": 1,
+  "fields": {
+    "name": "Taras Shevchenko",
+    "bio": "Taras Shevchenko was a visionary 19th-century artist and writer who is universally celebrated as the national poet of Ukraine. His monumental poetry collection, Kobzar, elevated the Ukrainian language and powerfully expressed the struggles, resilience, and soul of the Ukrainian people. Despite enduring serfdom and years of harsh exile, his passionate calls for freedom continue to inspire Ukraine's cultural identity and spirit of independence today."
+  }
+},
+{
+  "model": "shop.author",
+  "pk": 2,
+  "fields": {
+    "name": "Lesya Ukrainka",
+    "bio": "Lesya Ukrainka was a brilliant poet, playwright, and intellectual who pioneered modernist literature in Ukraine while battling a severe, lifelong illness. Her deeply philosophical works, most famously the mythical play The Forest Song and the defiant poem \"Contra Spem Spero!\", masterfully blend rich folklore with themes of freedom, human dignity, and female strength. Today, she is revered alongside Shevchenko as a symbol of immense willpower and cultural resilience, whose powerful voice helped shape modern Ukrainian identity."
+  }
+},
+{
+  "model": "shop.author",
+  "pk": 3,
+  "fields": {
+    "name": "Ivan Franko",
+    "bio": "van Franko was a tireless Ukrainian writer, scholar, and political activist who possessed a near-superhuman work ethic, leaving behind a staggering volume of literature, translations, and scientific works. Known as the \"Kamenyar\" (stonebreaker) after one of his famous poems, his writing fiercely championed the rights of the working class and tirelessly pushed for national awakening and social justice. Today, he stands as a colossal figure in Ukrainian history, so deeply respected that an entire city—the one you are in right now—was renamed in his honor."
+  }
+},
+{
+  "model": "shop.author",
+  "pk": 4,
+  "fields": {
+    "name": "J.R.R. Tolkien",
+    "bio": "Brilliant English professor and linguist who is universally celebrated as the father of modern high fantasy literature. He created the vastly detailed, mythic world of Middle-earth in his legendary masterpieces, The Hobbit and The Lord of the Rings, bringing it to life with entirely invented languages, deep histories, and epic battles between good and evil. Today, his unparalleled imagination continues to captivate millions of readers worldwide, having fundamentally shaped the entire fantasy genre and inspired generations of other writers."
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 2,
+  "fields": {
+    "name": "poem",
+    "slug": "poem"
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 3,
+  "fields": {
+    "name": "horror",
+    "slug": "horror"
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 4,
+  "fields": {
+    "name": "fantasy",
+    "slug": "fantasy"
+  }
+},
+{
+  "model": "shop.category",
+  "pk": 5,
+  "fields": {
+    "name": "children",
+    "slug": "children"
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 1,
+  "fields": {
+    "title": "Kobzar",
+    "price": "160.00",
+    "added_at": "2026-07-04T19:46:42.444Z",
+    "publisher_year": 2000,
+    "amount": "15.00",
+    "available": true,
+    "publisher": 2,
+    "calculated_average": "0.00",
+    "author": [
+      1
+    ],
+    "category": [
+      2
+    ]
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 2,
+  "fields": {
+    "title": "Lisova kazka",
+    "price": "190.00",
+    "added_at": "2026-07-04T19:47:24.510Z",
+    "publisher_year": 2010,
+    "amount": "18.00",
+    "available": true,
+    "publisher": 3,
+    "calculated_average": "0.00",
+    "author": [
+      2
+    ],
+    "category": [
+      4
+    ]
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 3,
+  "fields": {
+    "title": "Zahar Berkut",
+    "price": "240.00",
+    "added_at": "2026-07-04T19:47:59.476Z",
+    "publisher_year": 2009,
+    "amount": "21.00",
+    "available": true,
+    "publisher": 2,
+    "calculated_average": "0.00",
+    "author": [
+      3
+    ],
+    "category": [
+      3
+    ]
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 4,
+  "fields": {
+    "title": "Lord of the rings",
+    "price": "380.00",
+    "added_at": "2026-07-04T19:49:10.729Z",
+    "publisher_year": 2009,
+    "amount": "11.00",
+    "available": true,
+    "publisher": 1,
+    "calculated_average": "0.00",
+    "author": [
+      4
+    ],
+    "category": [
+      4
+    ]
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 5,
+  "fields": {
+    "title": "Hobbit",
+    "price": "430.00",
+    "added_at": "2026-07-04T19:49:40.947Z",
+    "publisher_year": 2007,
+    "amount": "17.00",
+    "available": true,
+    "publisher": 1,
+    "calculated_average": "0.00",
+    "author": [
+      4
+    ],
+    "category": [
+      4
+    ]
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 6,
+  "fields": {
+    "title": "Kazky",
+    "price": "190.00",
+    "added_at": "2026-07-04T19:50:19.520Z",
+    "publisher_year": 2005,
+    "amount": "10.00",
+    "available": true,
+    "publisher": 3,
+    "calculated_average": "0.00",
+    "author": [
+      2
+    ],
+    "category": [
+      5
+    ]
+  }
+},
+{
+  "model": "user_management.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$TktsSFkVxHvjjIovbAWQ6D$XcEaSQv2FLMl0AV2NNq7zWzG/q8aCs32hh89q/dXOGk=",
+    "last_login": "2026-07-08T17:58:11.326Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-07-04T19:19:47.191Z",
+    "email": "intjuli@gmail.com",
+    "phone_number": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user_management.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$dtyDAcjbdx6hpIvdtY2Dis$B+xLtVQwewYO38HpB0NL0+VaT6MqNTKg3xtH3KUJ+xc=",
+    "last_login": "2026-07-05T17:50:03Z",
+    "is_superuser": false,
+    "username": "Yuliia",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-05T17:33:19Z",
+    "email": "yuliia@example.com",
+    "phone_number": "0679426054",
+    "groups": [
+      1
+    ],
+    "user_permissions": [
+      13,
+      14,
+      15,
+      16,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      33,
+      34,
+      35,
+      36,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52
+    ]
+  }
+},
+{
+  "model": "user_management.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$mCbeIi4HmIeVa6DSCJYinJ$hlcecYLZAp1Poy9gvCXyW/IEUK6uiWMZ1Jb8H1h9k5k=",
+    "last_login": "2026-07-08T17:58:25.226Z",
+    "is_superuser": false,
+    "username": "Lesia",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-05T17:39:01.117Z",
+    "email": "lesia@example.com",
+    "phone_number": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user_management.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$8oQ5xB4yvScUJf08UR7xkB$33bdOb8tWa3Hs9Q1DIXY3YHgVClTIu15hK2+8+g8YSg=",
+    "last_login": "2026-07-08T17:17:24.472Z",
+    "is_superuser": false,
+    "username": "Dmytro",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-05T18:39:41.927Z",
+    "email": "dmytro@example.com",
+    "phone_number": "",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
