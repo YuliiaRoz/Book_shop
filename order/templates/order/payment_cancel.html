@@ -1,0 +1,9 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="text-danger mb-4">Оплату скасовано ❌</h1>
+    <p class="lead">Ви скасували процес оплати. Ваші товари все ще чекають на вас у кошику.</p>
+    <a href="{% url 'order:cart_detail' %}" class="btn btn-outline-secondary mt-3">Повернутися в кошик</a>
+</div>
+{% endblock %}

@@ -6,6 +6,8 @@ from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 
 logger = logging.getLogger(__name__)
+
+
 # Create your views here.
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
@@ -14,8 +16,8 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        self.object.backend = 'django.contrib.auth.backends.ModelBackend'
         login(self.request, self.object)
-
         logger.info(f"User {self.object.username} registered successfully!")
 
         return response

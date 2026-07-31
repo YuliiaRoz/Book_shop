@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+import order
 from shop.views import BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView, custom_404_view
 from django.conf import settings
 handler404 = custom_404_view
@@ -29,6 +31,7 @@ urlpatterns = [
     path('users/', include('user_management.urls')),
 
     path('accounts/', include('allauth.urls')),
+    path('order/', include('order.urls')),
 ]
 
 if settings.DEBUG:

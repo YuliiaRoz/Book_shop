@@ -28,8 +28,15 @@
                 </li>
 
                 <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="#">
-                        🛒 Корзина <span class="badge bg-danger rounded-pill">0</span>
+                    <a href="{% url 'order:cart_detail' %}" class="btn btn-outline-light me-2">
+                        🛒 Корзина
+                        <span class="badge bg-danger">
+                            {% if cart|length > 0 %}
+                                {{ cart|length }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
                     </a>
                 </li>
 

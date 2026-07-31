@@ -1,0 +1,72 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-secondary">Мій кошик</h2>
+
+    <!-- Перевіряємо, чи є в кошику товари -->
+    {% if cart|length > 0 %}
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Назва книги</th>
+                        <th class="text-center">Кількість</th>
+                        <th class="text-center">Ціна за шт.</th>
+                        <th class="text-end">Загалом</th>
+                        <th class="text-center">Дія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Перебираємо товари в кошику -->
+                    {% for item in cart %}
+                        {% with book=item.book %}
+                        <tr>
+                            <td class="fw-bold">{{ book.title }}</td>
+                            <td class="text-center">{{ item.quantity }} шт.</td>
+                            <td class="text-center">{{ item.price }} грн</td>
+                            <td class="text-end fw-bold text-success">{{ item.total_price }} грн</td>
+                            <td class="text-center">
+                                <form action="{% url 'order:remove_from_cart' book.id %}" method="post" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Видалити</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded shadow-sm">
+            <a href="{% url 'shop:book_list' %}" class="btn btn-outline-secondary">
+                &larr; Продовжити покупки
+            </a>
+            <div class="text-end">
+                <h4 class="mb-2">До сплати: <strong class="text-success">{{ cart.get_total_price }} грн</strong></h4>
+                <form action="{% url 'order:create_checkout_session' %}" method="POST">
+                    {% csrf_token %}
+                    <h3>Дані для доставки</h3>
+                    <div style="margin-bottom: 10px;">
+                        <input type="text" name="city" placeholder="Місто" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" name="street" placeholder="Вулиця, будинок, квартира" required>
+                    </div>
+                    <button type="submit">Оформити та Оплатити</button>
+                </form>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="alert alert-info text-center shadow-sm p-5" role="alert">
+            <h4 class="alert-heading mb-3">Ваш кошик порожній 🛒</h4>
+            <p>Ви ще не додали жодної книги до кошика.</p>
+            <a href="{% url 'shop:book_list' %}" class="btn btn-primary mt-2">
+                Перейти до каталогу
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

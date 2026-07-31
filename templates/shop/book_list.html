@@ -1,4 +1,6 @@
-{% extends 'shop/base.html' %} {% block content %}
+{% extends 'shop/base.html' %}
+
+{% block content %}
     <div class="row justify-content-center mb-4">
         <div class="col-md-8">
             <form method="get" action="{% url 'shop:book_list' %}" class="d-flex">
@@ -29,15 +31,35 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for book in books %}
             <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
+                <div class="card h-100 shadow-sm border-0 d-flex flex-column">
+                    <div class="card-body flex-grow-1">
                         <h5 class="card-title">
                             <a href="{% url 'shop:book_detail' book.pk %}" class="text-decoration-none text-dark fw-bold">
                                 {{ book.title }}
                             </a>
                         </h5>
                         <h6 class="card-subtitle mb-3 text-success fs-5">{{ book.price }} грн</h6>
-                        <p class="card-text text-muted mb-0">Залишок: {{ book.amount }} шт.</p>
+                        <p class="card-text text-muted mb-3">Залишок: {{ book.amount }} шт.</p>
+                    </div>
+
+                    <!-- КНОПКА ДОДАВАННЯ В КОШИК -->
+                    <div class="card-footer bg-white border-0 pt-0">
+                        {% if book.amount > 0 %}
+                            <form action="{% url 'order:add_to_cart' book.pk %}" method="post" class="d-flex gap-2">
+                                {% csrf_token %}
+                                <!-- Поле вибору кількості (min=1, max=залишок на складі) -->
+                                <input type="number" name="quantity" value="1" min="1" max="{{ book.amount }}"
+                                       class="form-control text-center" style="width: 70px;">
+
+                                <button type="submit" class="btn btn-primary flex-grow-1 shadow-sm">
+                                    Додати
+                                </button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-secondary w-100 shadow-sm" disabled>
+                                Немає в наявності
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
             </div>

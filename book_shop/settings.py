@@ -39,13 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop.apps.ShopConfig',
     'user_management.apps.UserManagementConfig',
-    'order.apps.OrderConfig',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'debug_toolbar',
+    'order',
 
 ]
 
@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'order.context_processors.cart',
             ],
         },
     },
@@ -163,6 +164,8 @@ LOGOUT_REDIRECT_URL = 'shop:book_list'
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+CART_SESSION_ID = 'cart'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -210,3 +213,9 @@ LOGGING = {
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': 'shop.utils.show_toolbar_to_superuser',
 }
+
+STRIPE_PUBLIC_KEY = 'pk_test_51TxhW4JK5RJAoxjV2LUI3xQJ81ocspcbhaVQb6yDz6QeG4r5yFl9efkYMCPUrF8jNErHVLntQnpZ3ZhNfW36S7oX001469Z7dC'
+STRIPE_SECRET_KEY = 'sk_test_51TxhW4JK5RJAoxjVVkIpr9SF0xmsZnNE3wFvosm99bNXWDxEBu0uLtOSSEMxD0ZRXwafRok0KdlmAh1yn8gKzlw4009yXGet1c'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'shop@mybookstore.com'
