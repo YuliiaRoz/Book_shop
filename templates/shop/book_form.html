@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    <h2>{% if form.instance.pk %}Редагування книги{% else %}Додавання нової книги{% endif %}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit" style="padding: 5px 15px; background: green; color: white;">Зберегти</button>
+        <a href="{% url 'shop:book_list' %}">Скасувати</a>
+    </form>
+{% endblock %}

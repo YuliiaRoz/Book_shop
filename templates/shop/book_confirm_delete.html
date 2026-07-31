@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    <h2>Підтвердження видалення</h2>
+    
+    <p>Ви дійсно хочете видалити книгу <strong>"{{ object.title }}"</strong>?</p>
+    <p>Цю дію неможливо буде скасувати!</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="padding: 5px 15px; background: red; color: white;">Так, видалити назавжди</button>
+        <a href="{% url 'shop:book_detail' object.pk %}">Ні, повернутися назад</a>
+    </form>
+{% endblock %}
