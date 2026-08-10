@@ -1,9 +1,10 @@
 {% extends 'shop/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="container text-center mt-5">
-    <h1 class="text-success mb-4">Оплата пройшла успішно! 🎉</h1>
-    <p class="lead">Дякуємо за ваше замовлення. Ми вже почали його пакувати.</p>
-    <a href="{% url 'shop:book_list' %}" class="btn btn-primary mt-3">Повернутися до покупок</a>
+    <h1 class="text-success mb-4">{% trans "Оплата пройшла успішно! 🎉" %}</h1>
+    <p class="lead">{% trans "Дякуємо за ваше замовлення. Ми вже почали його пакувати." %}</p>
+    <a href="{% url 'shop:book_list' %}" class="btn btn-primary mt-3">{% trans "Повернутися до покупок" %}</a>
 </div>
 {% endblock %}

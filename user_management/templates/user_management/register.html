@@ -1,11 +1,12 @@
 {% extends 'shop/base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-6">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Реєстрація нового покупця</h4>
+                <h4 class="mb-0">{% trans "Реєстрація нового покупця" %}</h4>
             </div>
             <div class="card-body">
                 <form method="post">
@@ -13,7 +14,7 @@
 
                     {% if form.errors %}
                         <div class="alert alert-danger">
-                            <strong>Ой! Щось пішло не так:</strong>
+                            <strong>{% trans "Ой! Щось пішло не так:" %}</strong>
                             <ul class="mb-0 mt-2">
                                 {% for field in form %}
                                     {% for error in field.errors %}
@@ -29,7 +30,7 @@
 
                     {{ form.as_p }}
 
-                    <button type="submit" class="btn btn-success w-100 mt-3">Зареєструватися</button>
+                    <button type="submit" class="btn btn-success w-100 mt-3">{% trans "Зареєструватися" %}</button>
                 </form>
             </div>
         </div>

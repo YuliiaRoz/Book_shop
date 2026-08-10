@@ -1,107 +1,94 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.views.generic import CreateView, UpdateView
+from django.contrib.auth.mixins import UserPassesTestMixin
 from shop.models import Book, Category
-from django.db.models import Q, Count
-from django.shortcuts import render
+from django.db.models import Q
+from django.shortcuts import render, redirect
+from django.http import Http404
+from django.core.paginator import Paginator
+from asgiref.sync import sync_to_async
 
-# from django.views.generic import DetailView, CreateView
-# from msilib.schema import ListView
-# from django.shortcuts import render
-# import shop
-# from shop.models import Book, Category, Author
-# from .forms import SearchForm
+@sync_to_async
+def get_paginated_books(request, queryset, paginate_by):
+    paginator = Paginator(queryset, paginate_by)
+    page_number = request.GET.get('page')
+    return paginator.get_page(page_number)
 
-# # Create your views here.
-# def main_page(request):
-#     available_books = Book.objects.filter(amount__gt=0, available=True)
-#     categories_with_count = Category.objects.annotate(total_books=Count('book'))
-#
-#     form = SearchForm(request.GET)
-#     search_results = None
-#
-#     if form.is_valid() and form.cleaned_data.get('query'):
-#         search_query = form.cleaned_data['query']
-#         search_results = Book.objects.filter(
-#         Q(title__icontains=search_query) |Q(author__name__icontains=search_query)
-#     ).distinct()
-#
-#     context = {
-#         'available_books': available_books,
-#         'search_results': search_results,
-#         'categories_with_count': categories_with_count,
-#         'form': form,
-#     }
-#     return render(request, 'shop/base.html', context)
+async def async_book_list(request):
+    queryset = Book.objects.filter(amount__gt=0, available=True)
+    query = request.GET.get('query')
+    category_slug = request.GET.get('category')
 
-# ListView - виведення списку всіх книг
-class BookListView(ListView):
-    model = Book
-    template_name = 'shop/book_list.html'
-    context_object_name = 'books'
+    if query:
+        clean_query = query.strip()
+        queryset = queryset.filter(
+            Q(title__icontains=clean_query) |
+            Q(author__name__icontains=clean_query)
+        ).distinct()
 
-    paginate_by = 3
+    if category_slug:
+        queryset = queryset.filter(category__slug=category_slug)
 
-    def get_queryset(self):
-        queryset = Book.objects.filter(amount__gt=0, available=True)
-        query = self.request.GET.get('query')
-        category_slug = self.request.GET.get('category')
+    queryset = queryset.order_by('-id')
 
-        if query:
-            clean_query = query.strip()
+    categories = [cat async for cat in Category.objects.all()]
 
-            queryset = queryset.filter(
-                Q(title__icontains=clean_query) |
-                Q(author__name__icontains=clean_query)
-            ).distinct()
+    page_obj = await get_paginated_books(request, queryset, 3)
+    books_list = [book async for book in page_obj.object_list]
 
-        if category_slug:
-            queryset = queryset.filter(category__slug=category_slug)
-        #print("запит:", queryset.query)
-        return queryset
+    context = {
+        'books': page_obj.object_list,
+        'page_obj': page_obj,
+        'categories': categories,
+    }
+    return render(request, 'shop/book_list.html', context)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(BookListView, self).get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        return context
+async def async_book_detail(request, pk):
+    try:
+        book = await Book.objects.aget(pk=pk)
+    except Book.DoesNotExist:
+        raise Http404("Книгу не знайдено")
 
-#DetailView - інформація про одну конкретну книгу
-class BookDetailView(DetailView):
-    model = Book
-    template_name = 'shop/book_detail.html'
-    context_object_name = 'book'
+    return render(request, 'shop/book_detail.html', {'book': book})
 
-#CreateView - створення нової книги
 class BookCreateView(UserPassesTestMixin, CreateView):
     model = Book
     template_name = 'shop/book_form.html'
     fields = ['title', 'author', 'category', 'price', 'publisher_year', 'amount', 'available', 'publisher']
     success_url = reverse_lazy('shop:book_list')
-    permission_required = 'shop.add_book'
 
     def test_func(self):
         return self.request.user.is_authenticated
 
-#UpdateView - видалення книги
 class BookUpdateView(UserPassesTestMixin, UpdateView):
     model = Book
     template_name = ('shop/book_form.html')
     fields = ['title', 'author', 'category', 'price', 'publisher_year', 'amount', 'available', 'publisher']
     success_url = reverse_lazy('shop:book_list')
-    permission_required = 'shop.change_book'
 
     def test_func(self):
         return self.request.user.is_authenticated
 
-#DeleteView - видалення книги
-class BookDeleteView(UserPassesTestMixin, DeleteView):
-    model = Book
-    template_name = 'shop/book_confirm_delete.html'
-    success_url = reverse_lazy('shop:book_list')
-    permission_required = 'shop.delete_book'
+@sync_to_async
+def check_delete_permission(user):
+    return user.is_authenticated and user.has_perm('shop.delete_book')
 
-    def test_func(self):
-        return self.request.user.is_authenticated
+async def async_book_delete(request, pk):
+    has_permission = await check_delete_permission(request.user)
+    if not has_permission:
+        from django.contrib.auth.views import redirect_to_login
+        return redirect_to_login(request.get_full_path())
+
+    try:
+        book = await Book.objects.aget(pk=pk)
+    except Book.DoesNotExist:
+        raise Http404("Книгу не знайдено")
+
+    if request.method == 'POST':
+        await book.adelete()
+        return redirect('shop:book_list')
+
+    return render(request, 'shop/book_confirm_delete.html', {'book': book, 'object': book})
 
 def custom_404_view(request, exception):
     return render(request, 'shop/error_404.html', status=404)

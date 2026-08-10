@@ -16,13 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-import order
-from shop.views import BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView, custom_404_view
 from django.conf import settings
-handler404 = custom_404_view
+from shop.views import custom_404_view
 
-app_name = 'shop'
+handler404 = custom_404_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,10 +29,12 @@ urlpatterns = [
 
     path('accounts/', include('allauth.urls')),
     path('order/', include('order.urls')),
+
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += [
+    urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns

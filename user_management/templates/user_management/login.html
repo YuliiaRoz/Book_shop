@@ -1,9 +1,11 @@
 {% extends 'shop/base.html' %}
+{% load i18n %}
+
 {% load socialaccount %}
 <div class="mt-4 text-center">
-    <p>Або увійдіть за допомогою:</p>
+    <p>{% trans "Або увійдіть за допомогою:" %}</p>
     <a href="{% provider_login_url 'google' %}" class="btn btn-danger w-100">
-        Увійти через Google
+        {% trans "Увійти через Google" %}
     </a>
 </div>
 {% block content %}
@@ -11,13 +13,13 @@
     <div class="col-md-6">
         <div class="card shadow-sm">
             <div class="card-header bg-secondary text-white">
-                <h4 class="mb-0">Вхід в кабінет</h4>
+                <h4 class="mb-0">{% trans "Вхід в кабінет" %}</h4>
             </div>
             <div class="card-body">
                 
                 {% if form.errors %}
                     <div class="alert alert-danger">
-                        Неправильний логін або пароль. Будь ласка, спробуйте ще раз!
+                        {% trans "Неправильний логін або пароль. Будь ласка, спробуйте ще раз!" %}
                     </div>
                 {% endif %}
                 
@@ -26,7 +28,7 @@
                     
                     {{ form.as_p }}
                     
-                    <button type="submit" class="btn btn-primary w-100 mt-3">Увійти</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">{% trans "Увійти" %}</button>
                 </form>
             </div>
         </div>

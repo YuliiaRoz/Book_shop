@@ -1,14 +1,15 @@
 {% extends 'shop/base.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h2>{% if form.instance.pk %}Редагування книги{% else %}Додавання нової книги{% endif %}</h2>
+    <h2>{% if form.instance.pk %}{% trans "Редагування книги" %}{% else %}{% trans "Додавання нової книги" %}{% endif %}</h2>
 
     <form method="post">
         {% csrf_token %}
         
         {{ form.as_p }}
         
-        <button type="submit" style="padding: 5px 15px; background: green; color: white;">Зберегти</button>
-        <a href="{% url 'shop:book_list' %}">Скасувати</a>
+        <button type="submit" style="padding: 5px 15px; background: green; color: white;">{% trans "Зберегти" %}</button>
+        <a href="{% url 'shop:book_list' %}">{% trans "Скасувати" %}</a>
     </form>
 {% endblock %}

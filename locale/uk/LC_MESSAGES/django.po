@@ -1,0 +1,401 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-09 19:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: book_shop/settings.py:23
+msgid "English"
+msgstr "English"
+
+#: book_shop/settings.py:24
+msgid "Ukraine"
+msgstr "Українська"
+
+#: order/models.py:6
+msgid "В обробці"
+msgstr "В обробці"
+
+#: order/models.py:7
+msgid "Відправлено"
+msgstr "Відправлено"
+
+#: order/models.py:8
+msgid "Доставлено"
+msgstr "Доставлено"
+
+#: order/models.py:9
+msgid "Скасовано"
+msgstr "Скасовано"
+
+#: order/models.py:12
+msgid "Очікує оплати"
+msgstr "Очікує оплати"
+
+#: order/models.py:13
+msgid "В процесі"
+msgstr "В процесі"
+
+#: order/models.py:14
+msgid "Оплачено"
+msgstr "Оплачено"
+
+#: order/models.py:15
+msgid "Помилка оплати"
+msgstr "Помилка оплати"
+
+#: order/models.py:18
+msgid "Клієнт"
+msgstr "Клієнт"
+
+#: order/models.py:19
+msgid "Адреса доставки"
+msgstr "Адреса доставки"
+
+#: order/models.py:21
+msgid "Загальна сума"
+msgstr "Загальна сума"
+
+#: order/models.py:23
+msgid "Статус замовлення"
+msgstr "Статус замовлення"
+
+#: order/models.py:24
+msgid "Спосіб оплати"
+msgstr "Спосіб оплати"
+
+#: order/models.py:25
+msgid "Статус оплати"
+msgstr "Статус оплати"
+
+#: order/models.py:27
+msgid "ТТН"
+msgstr "ТТН"
+
+#: order/models.py:28
+msgid "Створено"
+msgstr "Створено"
+
+#: order/models.py:31 order/models.py:32 order/models.py:35
+msgid "Замовлення"
+msgstr "Замовлення"
+
+#: order/models.py:35
+msgid "від"
+msgstr "від"
+
+#: order/models.py:40
+msgid "Книга"
+msgstr "Книга"
+
+#: order/models.py:41
+msgid "Ціна на момент покупки"
+msgstr "Ціна на момент покупки"
+
+#: order/models.py:42 order/templates/order/cart.html:15
+msgid "Кількість"
+msgstr "Кількість"
+
+#: order/models.py:45
+msgid "Товар у замовленні"
+msgstr "Товар у замовленні"
+
+#: order/models.py:46
+msgid "Товари в замовленні"
+msgstr "Товари в замовленні"
+
+#: order/models.py:49 order/templates/order/cart.html:26
+#: templates/shop/book_list.html:44
+msgid "шт."
+msgstr "шт."
+
+#: order/templates/order/cart.html:6
+msgid "Мій кошик"
+msgstr "Мій кошик"
+
+#: order/templates/order/cart.html:14
+msgid "Назва книги"
+msgstr "Назва книги"
+
+#: order/templates/order/cart.html:16
+msgid "Ціна за шт."
+msgstr "Ціна за шт."
+
+#: order/templates/order/cart.html:17
+msgid "Загалом"
+msgstr "Загалом"
+
+#: order/templates/order/cart.html:18
+msgid "Дія"
+msgstr "Дія"
+
+#: order/templates/order/cart.html:27 order/templates/order/cart.html:28
+#: order/templates/order/cart.html:47 templates/shop/book_list.html:43
+msgid "грн"
+msgstr "грн"
+
+#: order/templates/order/cart.html:32 templates/shop/book_detail.html:14
+msgid "Видалити"
+msgstr "Видалити"
+
+#: order/templates/order/cart.html:44
+msgid "Продовжити покупки"
+msgstr "Продовжити покупки"
+
+#: order/templates/order/cart.html:47
+msgid "До сплати:"
+msgstr "До сплати:"
+
+#: order/templates/order/cart.html:51
+msgid "Дані для доставки"
+msgstr "Дані для доставки"
+
+#: order/templates/order/cart.html:53
+msgid "Місто"
+msgstr "Місто"
+
+#: order/templates/order/cart.html:56
+msgid "Вулиця, будинок, квартира"
+msgstr "Вулиця, будинок, квартира"
+
+#: order/templates/order/cart.html:58
+msgid "Оформити та Оплатити"
+msgstr "Оформити та Оплатити"
+
+#: order/templates/order/cart.html:65
+msgid "Ваш кошик порожній"
+msgstr "Ваш кошик порожній"
+
+#: order/templates/order/cart.html:66
+msgid "Ви ще не додали жодної книги до кошика."
+msgstr "Ви ще не додали жодної книги до кошика."
+
+#: order/templates/order/cart.html:68
+msgid "Перейти до каталогу"
+msgstr "Перейти до каталогу"
+
+#: order/templates/order/payment_cancel.html:6
+msgid "Оплату скасовано ❌"
+msgstr "Оплату скасовано ❌"
+
+#: order/templates/order/payment_cancel.html:7
+msgid "Ви скасували процес оплати. Ваші товари все ще чекають на вас у кошику."
+msgstr ""
+"Ви скасували процес оплати. Ваші товари все ще чекають на вас у кошику."
+
+#: order/templates/order/payment_cancel.html:8
+msgid "Повернутися в кошик"
+msgstr "Повернутися в кошик"
+
+#: order/templates/order/payment_success.html:6
+msgid "Оплата пройшла успішно! 🎉"
+msgstr "Оплата пройшла успішно! 🎉"
+
+#: order/templates/order/payment_success.html:7
+msgid "Дякуємо за ваше замовлення. Ми вже почали його пакувати."
+msgstr "Дякуємо за ваше замовлення. Ми вже почали його пакувати."
+
+#: order/templates/order/payment_success.html:8
+msgid "Повернутися до покупок"
+msgstr "Повернутися до покупок"
+
+#: shop/forms.py:6
+msgid "Що шукаємо?"
+msgstr "Що шукаємо?"
+
+#: shop/forms.py:9
+msgid "Введіть назві або опис..."
+msgstr "Введіть назві або опис..."
+
+#: templates/shop/base.html:9
+msgid "Книжковий магазин"
+msgstr "Книжковий магазин"
+
+#: templates/shop/base.html:20
+msgid "📚 Книжковий Магазин"
+msgstr "📚 Книжковий Магазин"
+
+#: templates/shop/base.html:42
+msgid "Каталог"
+msgstr "Каталог"
+
+#: templates/shop/base.html:48
+msgid "🛒 Корзина"
+msgstr "🛒 Корзина"
+
+#: templates/shop/base.html:61
+msgid "👤 Кабінет "
+msgstr "👤 Кабінет "
+
+#: templates/shop/base.html:66
+msgid "Вийти"
+msgstr "Вийти"
+
+#: templates/shop/base.html:71
+msgid "+ Додати книгу"
+msgstr "+ Додати книгу"
+
+#: templates/shop/base.html:77
+#: user_management/templates/user_management/login.html:31
+msgid "Увійти"
+msgstr "Увійти"
+
+#: templates/shop/base.html:80
+msgid "Реєстрація"
+msgstr "Реєстрація"
+
+#: templates/shop/book_confirm_delete.html:5
+msgid "Підтвердження видалення"
+msgstr "Підтвердження видалення"
+
+#: templates/shop/book_confirm_delete.html:7
+msgid "Ви дійсно хочете видалити книгу"
+msgstr "Ви дійсно хочете видалити книгу"
+
+#: templates/shop/book_confirm_delete.html:8
+msgid "Цю дію неможливо буде скасувати!"
+msgstr "Цю дію неможливо буде скасувати!"
+
+#: templates/shop/book_confirm_delete.html:12
+msgid "Так, видалити назавжди"
+msgstr "Так, видалити назавжди"
+
+#: templates/shop/book_confirm_delete.html:13
+msgid "Ні, повернутися назад"
+msgstr "Ні, повернутися назад"
+
+#: templates/shop/book_detail.html:8
+msgid "Ціна:"
+msgstr "Ціна:"
+
+#: templates/shop/book_detail.html:9 templates/shop/book_detail.html:13
+msgid "Редагувати"
+msgstr "Редагувати"
+
+#: templates/shop/book_detail.html:19 templates/shop/error_404.html:12
+msgid "Повернутися до каталогу"
+msgstr "Повернутися до каталогу"
+
+#: templates/shop/book_form.html:5
+msgid "Редагування книги"
+msgstr "Редагування книги"
+
+#: templates/shop/book_form.html:5
+msgid "Додавання нової книги"
+msgstr "Додавання нової книги"
+
+#: templates/shop/book_form.html:12
+msgid "Зберегти"
+msgstr "Зберегти"
+
+#: templates/shop/book_form.html:13
+msgid "Скасувати"
+msgstr "Скасувати"
+
+#: templates/shop/book_list.html:9
+#, fuzzy
+#| msgid "Введіть назві або опис..."
+msgid "Шукати за назвою або автором..."
+msgstr "Шукати за назвою або автором..."
+
+#: templates/shop/book_list.html:12
+msgid "Шукати"
+msgstr "Шукати"
+
+#: templates/shop/book_list.html:18
+msgid "Фільтр за категоріями:"
+msgstr "Фільтр за категоріями:"
+
+#: templates/shop/book_list.html:20
+#, fuzzy
+#| msgid "Назва книги"
+msgid "Всі книги"
+msgstr "Назва книги"
+
+#: templates/shop/book_list.html:31
+msgid "Каталог книг"
+msgstr "Каталог книг"
+
+#: templates/shop/book_list.html:44
+msgid "Залишок:"
+msgstr "Залишок:"
+
+#: templates/shop/book_list.html:55
+msgid "Додати"
+msgstr "Додати"
+
+#: templates/shop/book_list.html:60
+msgid "Немає в наявності"
+msgstr "Немає в наявності"
+
+#: templates/shop/book_list.html:69
+msgid "Книг не знайдено."
+msgstr "Книг не знайдено."
+
+#: templates/shop/book_list.html:81 templates/shop/book_list.html:84
+msgid "Назад"
+msgstr "Назад"
+
+#: templates/shop/book_list.html:88
+msgid "Сторінка "
+msgstr "Сторінка"
+
+#: templates/shop/book_list.html:93 templates/shop/book_list.html:96
+msgid "Вперед"
+msgstr "Вперед"
+
+#: templates/shop/error_404.html:7
+msgid "Ой! Сторінку не знайдено"
+msgstr "Ой! Сторінку не знайдено"
+
+#: templates/shop/error_404.html:9
+msgid ""
+"Схоже, такої адреси не існує. Можливо, книгу вже розкупили або посилання "
+"вказано з помилкою."
+msgstr ""
+"Схоже, такої адреси не існує. Можливо, книгу вже розкупили або посилання "
+"вказано з помилкою."
+
+#: user_management/templates/user_management/login.html:6
+msgid "Або увійдіть за допомогою:"
+msgstr "Або увійдіть за допомогою:"
+
+#: user_management/templates/user_management/login.html:8
+msgid "Увійти через Google"
+msgstr "Увійти через Google"
+
+#: user_management/templates/user_management/login.html:16
+msgid "Вхід в кабінет"
+msgstr "Вхід в кабінет"
+
+#: user_management/templates/user_management/login.html:22
+msgid "Неправильний логін або пароль. Будь ласка, спробуйте ще раз!"
+msgstr "Неправильний логін або пароль. Будь ласка, спробуйте ще раз!"
+
+#: user_management/templates/user_management/register.html:9
+msgid "Реєстрація нового покупця"
+msgstr "Реєстрація нового покупця"
+
+#: user_management/templates/user_management/register.html:17
+msgid "Ой! Щось пішло не так:"
+msgstr "Ой! Щось пішло не так:"
+
+#: user_management/templates/user_management/register.html:33
+msgid "Зареєструватися"
+msgstr "Зареєструватися"

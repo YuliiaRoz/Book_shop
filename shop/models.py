@@ -15,7 +15,6 @@ class Publisher(models.Model):
     def __repr__(self):
         return self.name
 
-
 class Author(models.Model):
     name = models.CharField(max_length=200)
     bio = models.TextField()

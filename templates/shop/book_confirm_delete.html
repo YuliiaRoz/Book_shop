@@ -1,14 +1,15 @@
 {% extends 'shop/base.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h2>Підтвердження видалення</h2>
+    <h2>{% trans "Підтвердження видалення" %}</h2>
     
-    <p>Ви дійсно хочете видалити книгу <strong>"{{ object.title }}"</strong>?</p>
-    <p>Цю дію неможливо буде скасувати!</p>
+    <p>{% trans "Ви дійсно хочете видалити книгу" %} <strong>"{{ object.title }}"</strong>?</p>
+    <p>{% trans "Цю дію неможливо буде скасувати!" %}</p>
 
     <form method="post">
         {% csrf_token %}
-        <button type="submit" style="padding: 5px 15px; background: red; color: white;">Так, видалити назавжди</button>
-        <a href="{% url 'shop:book_detail' object.pk %}">Ні, повернутися назад</a>
+        <button type="submit" style="padding: 5px 15px; background: red; color: white;">{% trans "Так, видалити назавжди" %}</button>
+        <a href="{% url 'shop:book_detail' object.pk %}">{% trans "Ні, повернутися назад" %}</a>
     </form>
 {% endblock %}

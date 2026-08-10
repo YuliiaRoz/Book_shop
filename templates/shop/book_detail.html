@@ -1,19 +1,20 @@
 {% extends 'shop/base.html' %}
+{% load i18n %}
 
 {% block content %}
     <h1>{{ book.title }}</h1>
     
     <div style="border: 1px solid #ccc; padding: 15px;">
-        <p><strong>Ціна:</strong> {{ book.price }} грн</p>
-        <p><strong>Рік видання:</strong> {{ book.publisher_year }}</p>
+        <p><strong>{% trans "Ціна:" %}</strong> {{ book.price }} грн</p>
+        <p><strong>{% trans "Редагувати" %}ч</strong> {{ book.publisher_year }}</p>
         
         {% if user.is_staff %}
             <hr>
-            <a href="{% url 'shop:book_update' book.pk %}">Редагувати</a> |
-            <a href="{% url 'shop:book_delete' book.pk %}" style="color: red;">Видалити</a>
+            <a href="{% url 'shop:book_update' book.pk %}">{% trans "Редагувати" %}</a> |
+            <a href="{% url 'shop:book_delete' book.pk %}" style="color: red;">{% trans "Видалити" %}</a>
         {% endif %}
     </div>
     
     <br>
-    <a href="{% url 'shop:book_list' %}">&larr; Повернутися до каталогу</a>
+    <a href="{% url 'shop:book_list' %}">&larr;{% trans "Повернутися до каталогу" %}</a>
 {% endblock %}
