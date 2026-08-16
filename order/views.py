@@ -5,11 +5,14 @@ from django.conf import settings
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from shop.models import Book
 from user_management.models import DeliveryAddress
 from .cart import Cart
 from .models import Order, OrderItem, PaymentStatus
+
 # ініціалізація stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -23,6 +26,7 @@ class CartView(TemplateView):
         return context
 
 
+@require_POST
 def add_to_cart(request, book_id):
     cart = Cart(request)
     book = get_object_or_404(Book, id=book_id)
@@ -33,6 +37,7 @@ def add_to_cart(request, book_id):
     return redirect('order:cart_detail')
 
 
+@require_POST
 def remove_from_cart(request, book_id):
     cart = Cart(request)
     book = get_object_or_404(Book, id=book_id)
@@ -42,30 +47,47 @@ def remove_from_cart(request, book_id):
     return redirect('order:cart_detail')
 
 
+@login_required
+@require_POST
 def create_checkout_session(request):
+    """
+        Створення сесії оплати Stripe на основі вмісту кошика користувача.
+
+        Зберігає введену адресу доставки в сесію та формує line_items для Stripe API.
+        Актуальна ціна товарів береться безпосередньо з БД для запобігання підміни.
+
+        Args:
+            request (HttpRequest): POST-запит з даними адреси (city, street).
+
+        Returns:
+            HttpResponseRedirect: Перенаправлення на захищену сторінку оплати Stripe (код 303).
+        """
     cart = Cart(request)
     line_items = []
 
-    # зберігаємо адресу з форми
-    if request.method == 'POST':
-        city = request.POST.get('city')
-        street = request.POST.get('street')
+    # Оскільки стоїть @require_POST, це завжди POST запит
+    city = request.POST.get('city')
+    street = request.POST.get('street')
 
-        address = DeliveryAddress.objects.create(
-            owner=request.user,
-            city=city,
-            street=street
-        )
-        # зберігаємо під ключем 'checkout_address_id'
-        request.session['checkout_address_id'] = address.id
+    address = DeliveryAddress.objects.create(
+        owner=request.user,
+        city=city,
+        street=street
+    )
+    # зберігаємо під ключем 'checkout_address_id'
+    request.session['checkout_address_id'] = address.id
 
     # формуємо список товарів для stripe
     for item in cart:
+        book = item['book']
+        # БЕЗПЕКА: Беремо актуальну ціну з БД на момент чекауту, а не з сесії
+        actual_price = book.price
+
         line_items.append({
             'price_data': {
                 'currency': 'uah',
-                'product_data': {'name': str(item['book'].title), },
-                'unit_amount': int(item['price'] * 100),
+                'product_data': {'name': str(book.title), },
+                'unit_amount': int(actual_price * 100),
             },
             'quantity': int(item['quantity']),
         })
@@ -85,6 +107,7 @@ def create_checkout_session(request):
     return redirect(session.url, code=303)
 
 
+@login_required
 def payment_success(request):
     cart = Cart(request)
     user = request.user
@@ -94,8 +117,8 @@ def payment_success(request):
     address_id = request.session.get('checkout_address_id')
 
     with transaction.atomic():
-        # рахуємо загальну суму (total_price)
-        total_price = sum(item['price'] * item['quantity'] for item in cart)
+        # БЕЗПЕКА: рахуємо загальну суму за актуальними цінами з БД
+        total_price = sum(item['book'].price * item['quantity'] for item in cart)
 
         # створюємо запис про замовлення З УСІМА обов'язковими полями
         order = Order.objects.create(
@@ -106,12 +129,12 @@ def payment_success(request):
             payment_status=PaymentStatus.COMPLETED
         )
 
-        # зберігаємо кожен товар
+        # зберігаємо кожен товар з актуальною ціною
         for item in cart:
             OrderItem.objects.create(
                 order=order,
                 book=item['book'],
-                price=item['price'],
+                price=item['book'].price,
                 amount=item['quantity']
             )
 

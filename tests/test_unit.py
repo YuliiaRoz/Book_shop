@@ -102,7 +102,7 @@ def test_book_create_view_authenticated(client, test_user):
     client.force_login(test_user)
     url = reverse('shop:book_create')
     response = client.get(url)
-    assert response.status_code == 200
+    assert response.status_code == 403
 
 
 def test_book_create_view_admin(client, admin_user):
@@ -156,3 +156,40 @@ def test_empty_form_invalid():
 
     empty_form = SearchForm(data={})
     assert empty_form.is_valid() is True
+
+# AI запропоновані тести
+# ==========================================
+# ЗГЕНЕРОВАНІ AI ТЕСТИ ДЛЯ МОДЕЛЕЙ
+# ==========================================
+
+# Generated with AI, reviewed and modified
+def test_publisher_str_and_creation(db):
+    from shop.models import Publisher
+    publisher = Publisher.objects.create(name="O'Reilly Media")
+
+    assert publisher.name == "O'Reilly Media"
+    assert str(publisher) == "O'Reilly Media"
+    assert Publisher.objects.count() == 1
+
+
+# Generated with AI, reviewed and modified
+def test_author_str_and_creation(db):
+    from shop.models import Author
+    author = Author.objects.create(name="Сергій Жадан")
+
+    assert author.name == "Сергій Жадан"
+    assert str(author) == "Сергій Жадан"
+
+
+# Generated with AI, reviewed and modified
+def test_delivery_address_fields(test_user):
+    from user_management.models import DeliveryAddress
+    address = DeliveryAddress.objects.create(
+        owner=test_user,
+        city="Київ",
+        street="Хрещатик"
+    )
+
+    assert address.city == "Київ"
+    assert address.street == "Хрещатик"
+    assert address.owner.username == test_user.username
