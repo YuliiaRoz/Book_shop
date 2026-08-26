@@ -17,7 +17,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from rest_framework import routers
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
+
 from shop.views import custom_404_view
+from shop.api import BookViewSet, CategoryViewSet
+from order.api import OrderViewSet, CartViewSet
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+router = routers.DefaultRouter()
+router.register(r'books', BookViewSet, basename='api-books')
+router.register(r'categories', CategoryViewSet, basename='api-categories')
+router.register(r'orders', OrderViewSet, basename='api-orders')
+router.register(r'carts', CartViewSet, basename='api-carts')
 
 handler404 = custom_404_view
 
@@ -31,6 +47,16 @@ urlpatterns = [
     path('order/', include('order.urls')),
 
     path('i18n/', include('django.conf.urls.i18n')),
+
+    path('api/', include(router.urls)),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+
 ]
 
 if settings.DEBUG:

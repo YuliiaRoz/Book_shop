@@ -32,3 +32,8 @@ pytest-django
 pytest-cov
 factory-boy
 patch
+djangorestframework
+django-filter
+djangorestframework-simplejwt
+drf-spectacular
+django-cors-headers
