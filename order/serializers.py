@@ -2,15 +2,18 @@ from rest_framework import serializers
 from .models import Order, OrderItem
 from shop.models import Book
 
-class OrderSerializer(serializers.ModelSerializer):
-    book_title = serializers.SerializerMethodField()
+class OrderItemSerializer(serializers.ModelSerializer):
+    book_title = serializers.SerializerMethodField(source='book_title')
+    author_name = serializers.SerializerMethodField(source='book.author_name')
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'book', 'book_title', 'price', 'amount']
+        fields = ['id', 'book', 'book_title', 'author_name', 'price', 'amount']
+    def get_author_name(self, obj):
+        return ", ".join([book.author_name for book in obj.books.all()])
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    items = OrderSerializer(source='orderitem_set', many=True, read_only=True)
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order

@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .models import Order
+from .models import Order, OrderItem
 from .serializers import OrderSerializer
 from shop.models import Book
 from .cart import Cart
@@ -20,6 +20,20 @@ class OrderViewSet(viewsets.ModelViewSet):
         if user.is_authenticated:
             return Order.objects.filter(owner=user)
         return Order.objects.none()
+
+    def perform_create(self, serializer):
+        order = serializer.save(owner=self.request.user)
+        cart = Cart(self.request)
+
+        for item in cart:
+            OrderItem.objects.create(
+                order=order,
+                book=item['book'],
+                price=item['price'],
+                amount=item['quantity']
+            )
+
+            cart.clear()
 
 class CartViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
