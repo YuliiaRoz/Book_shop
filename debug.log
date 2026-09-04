@@ -3255,3 +3255,48 @@ WARNING | 2026-08-26 20:11:36,145 | log | Not Found: /api/books/999/
 WARNING | 2026-08-26 20:11:39,215 | log | Not Found: /api/carts/
 WARNING | 2026-08-26 20:11:39,234 | log | Unauthorized: /api/carts/
 WARNING | 2026-08-26 20:11:39,253 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:18:13,004 | log | Unauthorized: /api/orders/
+WARNING | 2026-08-27 19:18:13,011 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:18:16,216 | log | Unauthorized: /api/token/
+WARNING | 2026-08-27 19:18:17,286 | log | Forbidden: /api/categories/
+WARNING | 2026-08-27 19:18:18,365 | log | Forbidden: /api/categories/999/
+WARNING | 2026-08-27 19:18:18,367 | log | Not Found: /api/categories/999/
+WARNING | 2026-08-27 19:18:19,411 | log | Forbidden: /api/books/
+WARNING | 2026-08-27 19:18:19,414 | log | Bad Request: /api/books/
+WARNING | 2026-08-27 19:18:20,455 | log | Forbidden: /api/books/999/
+WARNING | 2026-08-27 19:18:20,458 | log | Not Found: /api/books/999/
+WARNING | 2026-08-27 19:18:21,513 | log | Not Found: /api/carts/
+WARNING | 2026-08-27 19:18:21,520 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:18:21,526 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:34:32,460 | log | Unauthorized: /api/orders/
+WARNING | 2026-08-27 19:34:32,468 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:34:35,699 | log | Unauthorized: /api/token/
+WARNING | 2026-08-27 19:34:36,769 | log | Forbidden: /api/categories/
+WARNING | 2026-08-27 19:34:37,828 | log | Forbidden: /api/categories/999/
+WARNING | 2026-08-27 19:34:37,830 | log | Not Found: /api/categories/999/
+WARNING | 2026-08-27 19:34:38,928 | log | Forbidden: /api/books/
+WARNING | 2026-08-27 19:34:38,933 | log | Bad Request: /api/books/
+WARNING | 2026-08-27 19:34:39,998 | log | Forbidden: /api/books/999/
+WARNING | 2026-08-27 19:34:40,001 | log | Not Found: /api/books/999/
+WARNING | 2026-08-27 19:34:41,061 | log | Not Found: /api/carts/
+WARNING | 2026-08-27 19:34:41,068 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:34:41,077 | log | Unauthorized: /api/carts/
+WARNING | 2026-08-27 19:34:47,501 | log | Not Found: /books/999
+WARNING | 2026-08-27 19:34:48,693 | log | Forbidden (Permission denied): /books/add
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 135, in dispatch
+    return self.handle_no_permission()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 49, in handle_no_permission
+    raise PermissionDenied(self.get_permission_denied_message())
+django.core.exceptions.PermissionDenied
+WARNING | 2026-08-27 19:34:49,886 | log | Not Found: /non-existent-url-12345/

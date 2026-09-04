@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
+from celery.schedules import crontab
 
 from allauth.headless.contrib import rest_framework
 from django.utils.translation import gettext_lazy as _
-import os
+import sentry_sdk
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +39,7 @@ LOCALE_PATHS = [
 SECRET_KEY = 'django-insecure-nhh9la#b(dlibdqdu8@jzkc6y58q5*xn^q%ztu4^t!c+e*n330'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
 
@@ -113,6 +115,16 @@ WSGI_APPLICATION = 'book_shop.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 DATABASES = {
     'default': {
@@ -265,3 +277,19 @@ SPECTACULAR_SETTINGS = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'clear-expired-sessions': {
+        'task': 'shop.tasks.clear_sessions',
+        'schedule': crontab(hour=3, minute=0),
+    },
+    'generate-daily-report': {
+        'task': 'shop.tasks.generate_reports',
+        'schedule': crontab(hour=8, minute=0),
+    }
+}

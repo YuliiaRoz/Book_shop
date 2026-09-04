@@ -1,5 +1,6 @@
 {% extends 'shop/base.html' %}
 {% load i18n %}
+{% load cache %}
 {% block content %}
     <div class="row justify-content-center mb-4">
         <div class="col-md-8">
@@ -14,19 +15,18 @@
         </div>
     </div>
 
-    <div class="text-center mb-5">
-        <h5 class="text-muted mb-3">{% trans "Фільтр за категоріями:" %}</h5>
+    <h5 class="text-muted mb-3">{% trans "Фільтр за категоріями:" %}</h5>
+    {% cache 3600 category_list request.GET.category request.GET.query LANGUAGE_CODE %}
         <a href="{% url 'shop:book_list' %}" class="btn btn-outline-secondary btn-sm me-2 mb-2 {% if not request.GET.category %}active{% endif %}">
             {% trans "Всі книги" %}
         </a>
 
         {% for cat in categories %}
-            <a href="?category={{ cat.slug }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}"
-               class="btn btn-outline-dark btn-sm me-2 mb-2 {% if request.GET.category == cat.slug %}active{% endif %}">
-                {{ cat.name }}
+            <a href="?category={{ cat.slug }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}" class="btn btn-outline-dark btn-sm me-2 mb-2 {% if request.GET.category == cat.slug %}active{% endif %}"
+            {{ cat.name }}
             </a>
         {% endfor %}
-    </div>
+    {% endcache %}
 
     <h3 class="mb-4 text-secondary text-center">{% trans "Каталог книг" %}</h3>
 
@@ -35,13 +35,15 @@
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 d-flex flex-column">
                     <div class="card-body flex-grow-1">
-                        <h5 class="card-title">
-                            <a href="{% url 'shop:book_detail' book.pk %}" class="text-decoration-none text-dark fw-bold">
-                                {{ book.title }}
-                            </a>
-                        </h5>
-                        <h6 class="card-subtitle mb-3 text-success fs-5">{{ book.price }} {% trans "грн"%}</h6>
-                        <p class="card-text text-muted mb-3">{% trans "Залишок:" %} {{ book.amount }} {%  trans "шт." %}</p>
+                        {%  cache 900 book_card_info.id LANGUAGE_CODE %}
+                            <h5 class="card-title">
+                                <a href="{% url 'shop:book_detail' book.pk %}" class="text-decoration-none text-dark fw-bold">
+                                    {{ book.title }}
+                                </a>
+                            </h5>
+                            <h6 class="card-subtitle mb-3 text-success fs-5">{{ book.price }} {% trans "грн"%}</h6>
+                            <p class="card-text text-muted mb-3">{% trans "Залишок:" %} {{ book.amount }} {%  trans "шт." %}</p>
+                        {%  endcache %}
                     </div>
 
                     <div class="card-footer bg-white border-0 pt-0">

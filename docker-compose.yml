@@ -1,45 +1,63 @@
 services:
-# 1. база даних PostgreSQL
   db:
-    image: postgres:15-alpine
-    restart: always
-    env_file:
-      - .env
-    environment:
-      # Спеціальні змінні для самого PostgreSQL
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    image: postgres:15
     volumes:
-      # Зберігаємо дані на жорсткий диск, щоб вони не зникли при перезапуску
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      # Django чекатиме, поки ця команда не скаже "База готова!"
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=book_shop
+      - POSTGRES_USER=book_shop
+      - POSTGRES_PASSWORD=book_password # Замініть на свій
 
-  # 2. Redis (для кешування)
   redis:
-    image: redis:7-alpine
-    restart: always
+    image: redis:alpine
 
-  # 3. Django-сервер
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    # ЗАМІНА: Замість runserver тепер працює Gunicorn
+    command: gunicorn book_shop.wsgi:application --bind 0.0.0.0:8000 --workers 3
     volumes:
-      - .:/app  # Синхронізує ваш код з макбука всередину контейнера
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    environment:
+      - DB_HOST=db
+      - DB_NAME=book_shop
+      - DB_USER=book_shop
+      - DB_PASSWORD=book_password
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
+      - db
+      - redis
+
+  celery:
+    build: .
+    command: celery -A book_shop worker -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+  celery-beat:
+    build: .
+    command: celery -A book_shop beat -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8000:80" # Тепер ви звертаєтесь до Nginx на 8000 порту
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:

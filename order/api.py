@@ -1,3 +1,4 @@
+from shop.tasks import send_order_email
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -34,6 +35,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             )
 
             cart.clear()
+
+            send_order_email.delay(user_email=self.request.user.email, order_id=order.id)
 
 class CartViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
