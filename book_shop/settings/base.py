@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
-import env
 from celery.schedules import crontab
 
 from allauth.headless.contrib import rest_framework
