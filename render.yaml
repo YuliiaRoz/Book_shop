@@ -11,7 +11,7 @@ services:
     env: python
     plan: free
     # Запускаємо лише встановлення пакетів та збір статики. Міграції краще робити вручну через Shell після запуску.
-    buildCommand: "cd . && pip install -r requirements.txt && python manage.py collectstatic --no-input"
+    buildCommand: "pip install -r requirements.txt && python manage.py migrate"
     startCommand: "gunicorn book_shop.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION
