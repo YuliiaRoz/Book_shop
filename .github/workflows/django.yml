@@ -1,0 +1,65 @@
+name: Django CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build and start Docker containers
+      run: |
+        docker-compose up -d --build
+        # Чекаємо 10 секунд, щоб PostgreSQL та Redis точно встигли запуститися
+        sleep 10 
+
+    - name: Check code formatting (Black)
+      # Параметр -T потрібен для запуску без інтерактивного терміналу (в CI)
+      run: docker-compose exec -T web black --check .
+
+    - name: Lint code (Flake8)
+      run: docker-compose exec -T web flake8 .
+
+    - name: Run Pytest with Coverage
+      # Запускаємо тести зі збором покриття коду
+      run: docker-compose exec -T web pytest --cov=. --cov-report=term-missing
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose down
+
+  build-and-push:
+    name: Build & Push to Docker Hub
+    needs: lint-and-test  # Ця джоба запуститься ТІЛЬКИ якщо тести пройшли успішно
+    runs-on: ubuntu-latest
+    # Виконуємо пуш тільки при злитті/пуші в main (не для pull requests)
+    if: github.event_name == 'push'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        # ЗАМІНІТЬ 'yourdockerhubuser' на ваш реальний логін у Docker Hub
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/book_shop:latest

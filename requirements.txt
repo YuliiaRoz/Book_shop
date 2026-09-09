@@ -42,3 +42,6 @@ celery
 redis
 gunicorn
 sentry-sdk
+black
+flake8
+pytest-cov

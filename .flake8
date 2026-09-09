@@ -1,0 +1,5 @@
+Ini, TOML
+
+[flake8]
+max-lina-length = 120
+exclude = .git, .venv, __pycache__, migrations, staticfiles
