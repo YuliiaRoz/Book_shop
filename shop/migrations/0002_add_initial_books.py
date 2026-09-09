@@ -1,46 +1,65 @@
 from django.db import migrations
 
 def create_initial_books(apps, schema_editor):
+    Publisher = apps.get_model('shop', 'Publisher')
+    Author = apps.get_model('shop', 'Author')
     Category = apps.get_model('shop', 'Category')
     Book = apps.get_model('shop', 'Book')
 
+    # 1. Створюємо видавця (обов'язкове поле для книги)
+    pub, _ = Publisher.objects.get_or_create(
+        name='Tech Books Publishing',
+        defaults={
+            'address': '123 Tech Lane',
+            'city': 'San Francisco',
+            'state_province': 'CA',
+            'country': 'USA',
+            'website': 'https://techbooks.example.com'
+        }
+    )
+
+    # 2. Створюємо авторів
+    author1, _ = Author.objects.get_or_create(
+        name='Eric Matthes',
+        defaults={'bio': 'Author of Python Crash Course.'}
+    )
+    author2, _ = Author.objects.get_or_create(
+        name='Robert C. Martin',
+        defaults={'bio': 'Uncle Bob, author of Clean Code.'}
+    )
+
+    # 3. Створюємо категорії
     cat_python, _ = Category.objects.get_or_create(
         name='Python Development',
         slug='python-development'
     )
-    cat_fiction, _ = Category.objects.get_or_create(
-        name='Fiction',
-        slug='fiction'
+    cat_programming, _ = Category.objects.get_or_create(
+        name='Programming',
+        slug='programming'
     )
 
+    # 4. Створюємо книги та додаємо зв'язки ManyToMany
     if not Book.objects.exists():
         book1 = Book.objects.create(
             title='Python Crash Course',
-            slug='python-crash-course',
-            description='A hands-on, project-based introduction to programming with Python.',
             price=29.99,
-            stock=15
+            publisher_year=2019,
+            amount=15.00,
+            publisher=pub
         )
-
-        book1.category.set([cat_python])
+        book1.author.set([author1])
+        book1.category.set([cat_python, cat_programming])
 
         book2 = Book.objects.create(
             title='Clean Code',
-            slug='clean-code',
-            description='A Handbook of Agile Software Craftsmanship.',
             price=34.50,
-            stock=10
+            publisher_year=2008,
+            amount=10.00,
+            publisher=pub
         )
-        book2.category.set([cat_python])
+        book2.author.set([author2])
+        book2.category.set([cat_programming])
 
-        book3 = Book.objects.create(
-            title='The Master and Margarita',
-            slug='the-master-and-margarita',
-            description='A classic novel by Mikhail Bulgakov.',
-            price=19.99,
-            stock=8
-        )
-        book3.category.set([cat_fiction])
 
 class Migration(migrations.Migration):
 
