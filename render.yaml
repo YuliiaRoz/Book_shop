@@ -5,12 +5,13 @@ databases:
     plan: free
 
 services:
-  # 1. Вебсервер Django (працює через Gunicorn + WhiteNoise)
+  # Вебсервер Django (працює через Gunicorn + WhiteNoise)
   - type: web
     name: book-shop-web
     env: python
     plan: free
-    buildCommand: "pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --no-input"
+    # Запускаємо лише встановлення пакетів та збір статики. Міграції краще робити вручну через Shell після запуску.
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input"
     startCommand: "gunicorn book_shop.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
@@ -29,47 +30,7 @@ services:
           name: book-shop-redis
           property: connectionString
 
-  # 2. Celery Worker (для фонових задач: email, звіти тощо)
-  - type: worker
-    name: book-shop-celery-worker
-    env: python
-    plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "celery -A book_shop worker -l info"
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.10.12
-      - key: DATABASE_URL
-        fromDatabase:
-          name: book_shop_db
-          property: connectionString
-      - key: CELERY_BROKER_URL
-        fromService:
-          type: redis
-          name: book-shop-redis
-          property: connectionString
-
-  # 3. Celery Beat (для періодичних задач за розкладом)
-  - type: worker
-    name: book-shop-celery-beat
-    env: python
-    plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "celery -A book_shop beat -l info"
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.10.12
-      - key: DATABASE_URL
-        fromDatabase:
-          name: book_shop_db
-          property: connectionString
-      - key: CELERY_BROKER_URL
-        fromService:
-          type: redis
-          name: book-shop-redis
-          property: connectionString
-
-  # 4. Redis (Брокер повідомлень для Celery та кешування)
+  # Redis (Брокер повідомлень та кеш)
   - type: redis
     name: book-shop-redis
     plan: free
