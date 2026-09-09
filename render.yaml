@@ -74,3 +74,6 @@ services:
     name: book-shop-redis
     plan: free
     maxmemoryPolicy: noeviction
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: "Allow all connections"
