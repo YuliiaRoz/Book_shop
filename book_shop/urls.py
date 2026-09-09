@@ -28,6 +28,11 @@ from shop.views import custom_404_view
 from shop.api import BookViewSet, CategoryViewSet
 from order.api import OrderViewSet, CartViewSet
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.http import HttpResponse
+
+def health_check(request):
+    return HttpResponse('ok', status=200)
+
 
 router = routers.DefaultRouter()
 router.register(r'books', BookViewSet, basename='api-books')
@@ -39,6 +44,9 @@ handler404 = custom_404_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('health_check/', health_check, name='health_check'),
+
 
     path('', include('shop.urls')),
     path('users/', include('user_management.urls')),
