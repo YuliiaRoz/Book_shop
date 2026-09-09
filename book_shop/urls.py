@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from shop.views import custom_404_view
+from shop.views import custom_404_view, health_check
 from shop.api import BookViewSet, CategoryViewSet
 from order.api import OrderViewSet, CartViewSet
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -64,6 +64,7 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
 
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('health/', health_check, name='health_check'),
 
 ]
 

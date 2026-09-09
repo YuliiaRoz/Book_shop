@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.paginator import Paginator
 from asgiref.sync import sync_to_async
-
+from django.http import HttpResponse
 
 @sync_to_async
 def get_paginated_books(request, queryset, paginate_by):
@@ -130,3 +130,6 @@ async def async_book_delete(request, pk):
 
 def custom_404_view(request, exception):
     return render(request, 'shop/error_404.html', status=404)
+
+def health_check(request):
+    return HttpResponse("Ok")

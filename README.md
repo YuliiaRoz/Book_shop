@@ -1,5 +1,8 @@
 # 📚 Django Book Shop Project
 
+[![Render Deploy](https://img.shields.io/badge/Render-Live-46E3B7?style=flat-square&logo=render&logoColor=white)](https://book-shop-web.onrender.com)
+![Coverage](./coverage.svg)
+
 Сучасний веб-додаток для продажу книг, розроблений на Django. Проєкт фокусується на високій продуктивності, безпеці та сучасному тестуванні.
 
 ## 🚀 Основний функціонал
