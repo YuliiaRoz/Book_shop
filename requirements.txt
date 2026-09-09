@@ -45,3 +45,5 @@ sentry-sdk
 black
 flake8
 pytest-cov
+django-environ
+whitenoise
