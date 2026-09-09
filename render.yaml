@@ -24,7 +24,17 @@ services:
         fromDatabase:
           name: book_shop_db
           property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: book-shop-redis
+          property: connectionString
       - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: book-shop-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
         fromService:
           type: redis
           name: book-shop-redis
