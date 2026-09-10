@@ -1,6 +1,19 @@
 import environ
 from .base import *
+import os
 
+REDIS_HOST = os.environ.get('REDIS_HOST', 'redis')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/1"),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 env = environ.Env(
     DEBUG=(bool, False)
 )

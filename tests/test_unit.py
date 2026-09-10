@@ -166,10 +166,11 @@ def test_empty_form_invalid():
 def test_publisher_str_and_creation(db):
     from shop.models import Publisher
     publisher = Publisher.objects.create(name="O'Reilly Media")
+    initial_count = Publisher.objects.count()
 
     assert publisher.name == "O'Reilly Media"
     assert str(publisher) == "O'Reilly Media"
-    assert Publisher.objects.count() == 1
+    assert Publisher.objects.count() == initial_count + 1
 
 
 # Generated with AI, reviewed and modified
