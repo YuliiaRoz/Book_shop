@@ -48,9 +48,11 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
 
 ROOT_URLCONF = 'book_shop.urls'
 
-WAREHOUSE_API_URL = env('WAREHOUSE_API_URL', default='http://localhost:8001/api')
+WAREHOUSE_API_TOKEN = env('WHEREHOUSE_API_TOKEN', default='')
+WAREHOUSE_API_URL = env('WAREHOUSE_API_URL', default='http://host.docker.internal:8001/api/inventory/')
 WAREHOUSE_USER = env('WAREHOUSE_USER', default='admin')
 WAREHOUSE_PASSWORD = env('WAREHOUSE_PASSWORD', default='password')
+SITE_URL = env('SITE_URL', default='http://localhost:8000')
 # Application definition
 
 INSTALLED_APPS = [

@@ -11284,3 +11284,4 @@ Traceback (most recent call last):
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: module 'order.warehouse_client' has no attribute 'check_stock'
 WARNING | 2026-09-17 06:11:24,313 | log | Not Found: /favicon.ico
+WARNING | 2026-09-17 11:47:32,595 | log | Not Found: /favicon.ico

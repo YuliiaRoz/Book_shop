@@ -34,10 +34,39 @@ def add_to_cart(request, book_id):
     cart = Cart(request)
     book = get_object_or_404(Book, id=book_id)
 
-    quantity = int(request.POST.get('quantity', 1))
-    cart.add(book=book, quantity=quantity)
+    quantity_to_add= int(request.POST.get('quantity', 1))
+    # скільки таких книг вже є у кошику зараз
+    current_quantity_in_cart = 0
+    for item in cart:
+        if item['book'].id == book.id:
+            current_quantity_in_cart = item['quantity']
+            break
 
-    return redirect('order:cart_detail')
+    # запит на Склад, щоб дізнатися актуальний залишок
+    stock_info = warehouse_client.check_stock(book.id)
+
+    if not stock_info:
+        messages.error(request, "Не вдалося перевірити залишки на складі. Спробуйте пізніше.")
+        return redirect(request.META.get('HTTP_REFERER', 'order:cart_detail'))
+
+    available_quantity = stock_info.get('available_quantity', 0)
+
+    # перевіряємо, чи не перевищує сумарна кількість доступний залишок
+    total_requested = current_quantity_in_cart + quantity_to_add
+
+    if total_requested > available_quantity:
+        messages.warning(
+            request,
+            f"Не можна додати стільки одиниць. В наявності лише {available_quantity} шт. (У вас в кошику: {current_quantity_in_cart})."
+        )
+        return redirect(request.META.get('HTTP_REFERER', 'order:cart_detail'))
+
+    # ящо все добре — додаємо в кошик
+    cart.add(book=book, quantity=quantity_to_add)
+    messages.success(request, f"«{book.title}» успішно додано до кошика!")
+
+    # Редирект назад на сторінку каталогу (або в кошик)
+    return redirect(request.META.get('HTTP_REFERER', 'order:cart_detail'))
 
 
 @require_POST
@@ -112,7 +141,7 @@ def create_checkout_session(request):
         })
 
     # створення сесії оплати
-    base_url = 'http://localhost:8000'  # або 'http://127.0.0.1:8000'
+    base_url = settings.SITE_URL.rstrip('/')
     success_url = base_url + reverse('order:payment_success')
     cancel_url = base_url + reverse('order:payment_cancel')
 
