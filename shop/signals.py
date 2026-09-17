@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 from django.conf import settings
 from .models import Book, Category
+from .tasks import sync_book_with_warehouse
 
 @receiver(post_save, sender=Book)
 @receiver(post_delete, sender=Book)
@@ -18,3 +19,10 @@ def invalidate_book_cache(sender, instance, **kwargs):
 @receiver(post_delete, sender=Category)
 def invalidate_category_cache(sender, instance, **kwargs):
     cache.clear()
+
+@receiver(post_save, sender=Book)
+def trigger_warehouse(sender, instance, created, **kwargs):
+    sync_book_with_warehouse.delay(
+        sku=str(instance.id),
+        name=instance.title,
+    )

@@ -1,4 +1,5 @@
 import stripe
+from . import warehouse_client
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import TemplateView
 from django.conf import settings
@@ -12,6 +13,8 @@ from shop.models import Book
 from user_management.models import DeliveryAddress
 from .cart import Cart
 from .models import Order, OrderItem, PaymentStatus
+from django.contrib import messages
+from shop.services import WarehouseClient
 
 # ініціалізація stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -52,13 +55,10 @@ def remove_from_cart(request, book_id):
 def create_checkout_session(request):
     """
         Створення сесії оплати Stripe на основі вмісту кошика користувача.
-
         Зберігає введену адресу доставки в сесію та формує line_items для Stripe API.
         Актуальна ціна товарів береться безпосередньо з БД для запобігання підміни.
-
         Args:
             request (HttpRequest): POST-запит з даними адреси (city, street).
-
         Returns:
             HttpResponseRedirect: Перенаправлення на захищену сторінку оплати Stripe (код 303).
         """
@@ -69,6 +69,25 @@ def create_checkout_session(request):
     city = request.POST.get('city')
     street = request.POST.get('street')
 
+    # перевірка залишків на складі
+    for item in cart:
+        book = item['book']
+        requested_quantity = int(item['quantity'])
+        # Робимо запит до мікросервісу Warehouse
+        stock_info = warehouse_client.check_stock(book.id)
+
+        if not stock_info:
+            messages.error(request, f"Склад наразі недоступний. Неможливо перевірити залишок для книги «{book.title}».")
+            return redirect('order:cart_detail')
+
+        available_amount = stock_info.get('available_quantity', 0)
+
+        if available_amount < requested_quantity:
+            messages.error(request,
+                           f"Вибачте, товару «{book.title}» недостатньо на складі. Доступно: {available_amount} шт.")
+            return redirect('order:cart_detail')
+
+    # якщо все є в наявності - створюємо адресу та сесію Stripe
     address = DeliveryAddress.objects.create(
         owner=request.user,
         city=city,
@@ -93,8 +112,9 @@ def create_checkout_session(request):
         })
 
     # створення сесії оплати
-    success_url = request.build_absolute_uri(reverse('order:payment_success'))
-    cancel_url = request.build_absolute_uri(reverse('order:payment_cancel'))
+    base_url = 'http://localhost:8000'  # або 'http://127.0.0.1:8000'
+    success_url = base_url + reverse('order:payment_success')
+    cancel_url = base_url + reverse('order:payment_cancel')
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],

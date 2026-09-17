@@ -42,11 +42,15 @@ LOCALE_PATHS = [
 SECRET_KEY = 'django-insecure-nhh9la#b(dlibdqdu8@jzkc6y58q5*xn^q%ztu4^t!c+e*n330'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
 
+ROOT_URLCONF = 'book_shop.urls'
 
+WAREHOUSE_API_URL = env('WAREHOUSE_API_URL', default='http://localhost:8001/api')
+WAREHOUSE_USER = env('WAREHOUSE_USER', default='admin')
+WAREHOUSE_PASSWORD = env('WAREHOUSE_PASSWORD', default='password')
 # Application definition
 
 INSTALLED_APPS = [
@@ -88,8 +92,6 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-ROOT_URLCONF = 'book_shop.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -125,7 +127,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'book_shop'),
         'USER': os.environ.get('DB_USER', 'book_shop'),
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_HOST' , 'db'),
+        'HOST': os.environ.get('DB_HOST' , 'localhost'),
         'PORT': os.environ.get('DB_PORT' , '5432'),
     }
 }
@@ -162,7 +164,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

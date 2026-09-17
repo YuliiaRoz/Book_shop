@@ -24,6 +24,10 @@ services:
       - DB_NAME=book_shop
       - DB_USER=book_shop
       - DB_PASSWORD=book_password
+      - DJANGO_SETTINGS_MODULE=book_shop.settings.production
+      - SECRET_KEY=jhashdghagsdh2536hdhd7hd7dh
+      - DATABASE_URL=postgres://book_shop:book_password@db:5432/book_shop
+      - REDIS_URL=redis://redis:6379/1
     depends_on:
       - db
       - redis
@@ -31,6 +35,11 @@ services:
   celery:
     build: .
     command: celery -A book_shop worker -l info
+    environment:
+      - DJANGO_SETTINGS_MODULE=book_shop.settings.production
+      - SECRET_KEY=jhashdghagsdh2536hdhd7hd7dh
+      - DATABASE_URL=postgres://book_shop:book_password@db:5432/book_shop
+      - REDIS_URL=redis://redis:6379/1
     volumes:
       - .:/app
     depends_on:
@@ -42,6 +51,11 @@ services:
     command: celery -A book_shop beat -l info
     volumes:
       - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=book_shop.settings.production
+      - SECRET_KEY=jhashdghagsdh2536hdhd7hd7dh
+      - DATABASE_URL=postgres://book_shop:book_password@db:5432/book_shop
+      - REDIS_URL=redis://redis:6379/1
     depends_on:
       - db
       - redis
